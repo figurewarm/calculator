@@ -2,6 +2,8 @@ package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     int calFlag = 0;
     //    int calFlag2 = 0;
     Boolean calOp = false;
+    Boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        int i = -1 - 2;
 //        Log.v("number",String.valueOf(i));
+
+        //横屏转换
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent intents = new Intent(MainActivity.this, Main2Activity.class);
+            startActivity(intents);
+        }
+
 
         //添加按键屏幕显示
         final EditText text = findViewById(R.id.screen);
@@ -43,26 +53,44 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 text.setText("0");
                 calFlag = 0;
+                flag = true;
 //                calFlag2 = 0;
 //                num3 = 0;
             }
         });
 
+        Button lose = findViewById(R.id.lose_btn);
+        lose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String concent = String.valueOf(text.getText());
+                if (!concent.equals("0"))
+                    text.setText("-" + text.getText());
+
+            }
+        });
+
+        Button percent = findViewById(R.id.percent_btn);
+        percent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String concent = String.valueOf(text.getText());
+                double res = Double.valueOf(concent);
+                text.setText(String.valueOf(res * 0.01));
+            }
+        });
 
         //小数点
         Button point = findViewById(R.id.point_btn);
         point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean flag = true;
-                String concent = String.valueOf(text.getText());
-                String[] contents = concent.split("");
-                for (String i : contents) {
-                    if (i.equals("."))
-                        flag = false;
-                }
-                if (flag)
+                String content = String.valueOf(text.getText());
+                if (flag) {
                     text.setText(text.getText() + ".");
+                }
+                flag = false;
+
             }
         });
 
@@ -123,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 calOp = false;
                 calFlag = 1;
+                flag = true;
             }
         });
 
@@ -178,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 calFlag = 2;
+                flag =true;
             }
         });
         Button multiply = findViewById(R.id.multiply_btn);
@@ -219,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 calFlag = 3;
+                flag = true;
             }
         });
         Button divide = findViewById(R.id.divide_btn);
@@ -266,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 calFlag = 4;
+                flag = true;
             }
 
         });
@@ -329,10 +361,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("1");
-                else
+                if (!flag)
                     text.setText(text.getText() + "1");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("1");
+                    else
+                        text.setText(text.getText() + "1");
+                }
             }
         });
 
@@ -342,10 +378,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("2");
-                else
+                if (!flag)
                     text.setText(text.getText() + "2");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("2");
+                    else
+                        text.setText(text.getText() + "2");
+                }
             }
         });
 
@@ -355,10 +395,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String concent = String.valueOf(text.getText());
                 calOp = true;
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("3");
-                else
+                if (!flag)
                     text.setText(text.getText() + "3");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("3");
+                    else
+                        text.setText(text.getText() + "3");
+                }
             }
         });
 
@@ -368,10 +412,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("4");
-                else
+                if (!flag)
                     text.setText(text.getText() + "4");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("4");
+                    else
+                        text.setText(text.getText() + "4");
+                }
             }
         });
 
@@ -381,10 +429,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("5");
-                else
+                if (!flag)
                     text.setText(text.getText() + "5");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("5");
+                    else
+                        text.setText(text.getText() + "5");
+                }
             }
         });
 
@@ -394,10 +446,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("6");
-                else
+                if (!flag)
                     text.setText(text.getText() + "6");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("6");
+                    else
+                        text.setText(text.getText() + "6");
+                }
             }
         });
 
@@ -407,10 +463,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("7");
-                else
+                if (!flag)
                     text.setText(text.getText() + "7");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("7");
+                    else
+                        text.setText(text.getText() + "7");
+                }
             }
         });
 
@@ -420,10 +480,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("8");
-                else
+                if (!flag)
                     text.setText(text.getText() + "8");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("8");
+                    else
+                        text.setText(text.getText() + "8");
+                }
             }
         });
 
@@ -433,10 +497,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("9");
-                else
+                if (!flag)
                     text.setText(text.getText() + "9");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("9");
+                    else
+                        text.setText(text.getText() + "9");
+                }
             }
         });
 
@@ -446,10 +514,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calOp = true;
                 String concent = String.valueOf(text.getText());
-                if (concent.equals("0") || calFlag != 0)
-                    text.setText("0");
-                else
+                if (!flag)
                     text.setText(text.getText() + "0");
+                else {
+                    if (concent.equals("0") || calFlag != 0)
+                        text.setText("0");
+                    else
+                        text.setText(text.getText() + "0");
+                }
             }
         });
 
